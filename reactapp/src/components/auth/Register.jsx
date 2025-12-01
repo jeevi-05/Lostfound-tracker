@@ -26,7 +26,7 @@ const Register = () => {
     setMessage('');
 
     try {
-      const response = await authService.register(formData.name, formData.email, formData.password);
+      await authService.register(formData.name, formData.email, formData.password);
       // Hide token from user, show clean message
       setMessage('Registration successful! Please check your email for verification.');
     } catch (err) {
@@ -53,7 +53,7 @@ const Register = () => {
           <input
             type="text"
             name="name"
-            placeholder="Enter your full name"
+            placeholder="Enter your name"
             value={formData.name}
             onChange={handleChange}
             required
@@ -91,8 +91,8 @@ const Register = () => {
         </button>
         
         <div className="auth-links">
-          <p>Already have an account?</p>
-          <a href="/login">Sign in here</a>
+          <p>Already have an account? <a href="/login">Sign in here</a> </p>
+          
         </div>
       </form>
     </div>

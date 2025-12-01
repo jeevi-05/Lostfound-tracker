@@ -35,7 +35,7 @@ const Login = () => {
         {error && <div className="error">{error}</div>}
         
         <div className="form-group">
-          <label>University Email</label>
+          {/* <label>University Email</label> */}
           <input
             type="email"
             placeholder="Enter your university email"
@@ -46,7 +46,7 @@ const Login = () => {
         </div>
         
         <div className="form-group">
-          <label>Password</label>
+          {/* <label>Password</label> */}
           <input
             type="password"
             placeholder="Enter your password"
@@ -62,8 +62,8 @@ const Login = () => {
         </button>
         
         <div className="auth-links">
-          <p>New to CampusTrack?</p>
-          <a href="/register">Create your account</a>
+          <p>New to CampusTrack? <a href="/register">Create your account</a></p>
+          
         </div>
       </form>
     </div>

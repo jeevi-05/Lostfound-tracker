@@ -25,7 +25,7 @@ body {
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 450px;
+  max-width: 600px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -66,6 +66,7 @@ body {
   color: #34495e;
   font-weight: 500;
   font-size: 0.9rem;
+  text-align: left;
 }
 
 .auth-form input {
@@ -83,6 +84,11 @@ body {
   border-color: #667eea;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.auth-form input::placeholder {
+  opacity: 0.5;
+  color: #7f8c8d;
 }
 
 .auth-form button {

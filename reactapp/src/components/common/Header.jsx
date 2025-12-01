@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const { currentUser, logout } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const headerStyle = {
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -107,7 +114,7 @@ const Header = () => {
               <div style={dropdownItemStyle}>
                 Role: {currentUser.role}
               </div>
-              <button onClick={logout} style={logoutButtonStyle}>
+              <button onClick={handleLogout} style={logoutButtonStyle}>
                 Logout
               </button>
             </div>

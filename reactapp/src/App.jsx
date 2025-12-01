@@ -96,7 +96,6 @@ const AppRoutes = () => {
 
   return (
     <Router>
-      <Header />
       <Routes>
         <Route 
           path="/login" 
@@ -111,7 +110,10 @@ const AppRoutes = () => {
           path="/dashboard" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <>
+                <Header />
+                <Dashboard />
+              </>
             </ProtectedRoute>
           } 
         />
