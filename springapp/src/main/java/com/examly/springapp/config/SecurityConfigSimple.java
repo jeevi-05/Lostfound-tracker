@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+import com.examly.springapp.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +25,9 @@ public class SecurityConfigSimple {
 
     @Autowired
     private CorsConfigurationSource corsConfigurationSource;
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,8 +53,9 @@ public class SecurityConfigSimple {
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .csrf(csrf -> csrf.disable())
             .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
+                .requestMatchers("/api/auth/**", "/h2-console/**", "/api/categories/**", "/api/lost-items/**", "/api/upload/**", "/uploads/**", "/api/test/**").permitAll()
                 .anyRequest().authenticated()
             );
 

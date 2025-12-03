@@ -51,6 +51,19 @@ public class AuthController {
         }
     }
 
+    // @PostMapping("/create-admin")
+    // public ResponseEntity<?> createAdmin(@Valid @RequestBody RegisterRequest request) {
+    //     try {
+    //         String token = authService.createAdmin(request);
+    //         return ResponseEntity.status(HttpStatus.CREATED).body(
+    //                 new ApiMessageResponse("Admin user created successfully. Token: " + token)
+    //         );
+    //     } catch (Exception ex) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+    //                 .body(new ApiMessageResponse("Failed to create admin: " + ex.getMessage()));
+    //     }
+    // }
+
 
 
     // small wrapper DTO for simple messages

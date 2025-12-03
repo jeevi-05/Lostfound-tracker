@@ -93,4 +93,28 @@ public class AuthServiceSimple {
         }
         return "User: " + user.getEmail() + ", Verified: " + user.isVerified() + ", Password set: " + (user.getPassword() != null);
     }
+
+    // public String createAdmin(RegisterRequest req) {
+    //     if (userRepository.existsByEmail(req.getEmail())) {
+    //         throw new IllegalArgumentException("Email already in use");
+    //     }
+
+    //     User user = new User();
+    //     user.setName(req.getName());
+    //     user.setEmail(req.getEmail());
+    //     user.setPassword(passwordEncoder.encode(req.getPassword()));
+    //     user.setRole(Role.ADMIN);
+    //     user.setVerified(true);
+    //     userRepository.save(user);
+
+    //     // Generate verification token
+    //     VerificationToken vt = new VerificationToken();
+    //     vt.setToken(UUID.randomUUID().toString());
+    //     vt.setUser(user);
+    //     vt.setExpiryDate(LocalDateTime.now().plusDays(2));
+    //     vt.setUsed(false);
+    //     tokenRepository.save(vt);
+
+    //     return vt.getToken();
+    // }
 }

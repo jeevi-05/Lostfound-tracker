@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/common/Header';
@@ -6,10 +6,13 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import VerifyAccount from './components/auth/VerifyAccount';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import AdminDashboard from './components/admin/AdminDashboard';
+import ReportLostForm from './components/lostitem/ReportLostForm';
 import './App.css';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
+  const [showReportLost, setShowReportLost] = useState(false);
   
   const dashboardStyle = {
     minHeight: 'calc(100vh - 80px)',
@@ -56,7 +59,9 @@ const Dashboard = () => {
     padding: '2rem',
     borderRadius: '15px',
     boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center'
+    textAlign: 'center',
+    cursor: 'pointer',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
   };
   
   return (
@@ -76,7 +81,10 @@ const Dashboard = () => {
             <p>Search for lost items reported by other students</p>
           </div>
           
-          <div style={cardStyle}>
+          <div 
+            style={cardStyle}
+            onClick={() => setShowReportLost(true)}
+          >
             <h3 style={{ color: '#51cf66', marginBottom: '1rem' }}>📝 Report Lost</h3>
             <p>Report items you've lost on campus</p>
           </div>
@@ -86,6 +94,13 @@ const Dashboard = () => {
             <p>Help others by reporting items you've found</p>
           </div>
         </div>
+        
+        {showReportLost && (
+          <ReportLostForm
+            onClose={() => setShowReportLost(false)}
+            onSuccess={() => setShowReportLost(false)}
+          />
+        )}
       </div>
     </div>
   );
@@ -112,7 +127,7 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <>
                 <Header />
-                <Dashboard />
+                {currentUser?.role === 'ADMIN' ? <AdminDashboard /> : <Dashboard />}
               </>
             </ProtectedRoute>
           } 
