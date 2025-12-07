@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { lostItemService } from '../../services/lostItemService';
+import { foundItemService } from '../../services/foundItemService';
 import CategorySelect from './CategorySelect';
 import ImageUpload from './ImageUpload';
-import './ReportLostForm.css';
+import './ReportFoundForm.css';
 
-const ReportLostForm = ({ onClose, onSuccess }) => {
+const ReportFoundForm = ({ onClose, onSuccess }) => {
   const { currentUser } = useAuth();
   const [formData, setFormData] = useState({
     itemName: '',
     description: '',
     categoryId: '',
-    lostLocation: '',
-    lostDate: '',
+    foundLocation: '',
+    foundDate: '',
     photoUrl: ''
   });
   const [errors, setErrors] = useState({});
@@ -29,19 +29,19 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
       newErrors.categoryId = 'Category is required';
     }
 
-    if (!formData.lostLocation.trim()) {
-      newErrors.lostLocation = 'Lost location is required';
+    if (!formData.foundLocation.trim()) {
+      newErrors.foundLocation = 'Found location is required';
     }
 
-    if (!formData.lostDate) {
-      newErrors.lostDate = 'Lost date is required';
+    if (!formData.foundDate) {
+      newErrors.foundDate = 'Found date is required';
     } else {
-      console.log('Validating date:', formData.lostDate);
-      const selectedDate = new Date(formData.lostDate);
+      console.log('Validating date:', formData.foundDate);
+      const selectedDate = new Date(formData.foundDate);
       const today = new Date();
       today.setHours(23, 59, 59, 999); // Set to end of today
       if (selectedDate > today) {
-        newErrors.lostDate = 'Lost date cannot be in the future';
+        newErrors.foundDate = 'Found date cannot be in the future';
       }
     }
 
@@ -59,41 +59,41 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
     setLoading(true);
     try {
       // Convert date to YYYY-MM-DD format
-      let convertedDate = formData.lostDate;
-      if (formData.lostDate) {
-        if (formData.lostDate.includes('/')) {
+      let convertedDate = formData.foundDate;
+      if (formData.foundDate) {
+        if (formData.foundDate.includes('/')) {
           // Handle MM/DD/YYYY format
-          const [month, day, year] = formData.lostDate.split('/');
+          const [month, day, year] = formData.foundDate.split('/');
           convertedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        } else if (formData.lostDate.includes('-') && formData.lostDate.length === 10) {
+        } else if (formData.foundDate.includes('-') && formData.foundDate.length === 10) {
           // Already in YYYY-MM-DD format
-          convertedDate = formData.lostDate;
+          convertedDate = formData.foundDate;
         }
       }
       
       const submitData = {
         ...formData,
-        lostDate: convertedDate,
+        foundDate: convertedDate,
         categoryId: parseInt(formData.categoryId),
-        reporterEmail: currentUser.email,
-        reporterName: currentUser.email.split('@')[0]
+        finderEmail: currentUser.email,
+        finderName: currentUser.email.split('@')[0]
       };
 
-      console.log('Original date:', formData.lostDate);
+      console.log('Original date:', formData.foundDate);
       console.log('Converted date:', convertedDate);
       console.log('Final submit data:', submitData);
-      await lostItemService.createLostItem(submitData);
+      await foundItemService.createFoundItem(submitData);
       
       // Success feedback
-      alert('Lost item reported successfully!');
+      alert('Found item reported successfully!');
       
       // Reset form
       setFormData({
         itemName: '',
         description: '',
         categoryId: '',
-        lostLocation: '',
-        lostDate: '',
+        foundLocation: '',
+        foundDate: '',
         photoUrl: ''
       });
       
@@ -102,7 +102,7 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
       
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(`Failed to report lost item: ${error.message}`);
+      alert(`Failed to report found item: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -116,14 +116,14 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
   };
 
   return (
-    <div className="report-lost-overlay">
-      <div className="report-lost-modal">
+    <div className="report-found-overlay" data-extension-ignore="true">
+      <div className="report-found-modal" data-extension-ignore="true">
         <div className="modal-header">
-          <h2>Report Missing Asset</h2>
+          <h2>Report Found Asset</h2>
           <button className="close-button" onClick={onClose}>✕</button>
         </div>
 
-        <form onSubmit={handleSubmit} className="report-form">
+        <form onSubmit={handleSubmit} className="report-form" data-extension-ignore="true">
           <div className="form-left">
             <div className="form-group">
               <label htmlFor="itemName">Item Name *</label>
@@ -146,36 +146,36 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
             />
 
             <div className="form-group">
-              <label htmlFor="lostLocation">Lost Location *</label>
+              <label htmlFor="foundLocation">Found Location *</label>
               <input
                 type="text"
-                id="lostLocation"
-                value={formData.lostLocation}
-                onChange={(e) => handleInputChange('lostLocation', e.target.value)}
-                className={`form-control ${errors.lostLocation ? 'error' : ''}`}
+                id="foundLocation"
+                value={formData.foundLocation}
+                onChange={(e) => handleInputChange('foundLocation', e.target.value)}
+                className={`form-control ${errors.foundLocation ? 'error' : ''}`}
                 placeholder="e.g., Library 2nd Floor, Cafeteria, Parking Lot A"
                 maxLength={200}
               />
-              {errors.lostLocation && <span className="error-message">{errors.lostLocation}</span>}
+              {errors.foundLocation && <span className="error-message">{errors.foundLocation}</span>}
             </div>
           </div>
 
           <div className="form-right">
             <div className="form-group">
-              <label htmlFor="lostDate">Lost Date *</label>
+              <label htmlFor="foundDate">Found Date *</label>
               <input
                 type="date"
-                id="lostDate"
-                value={formData.lostDate}
+                id="foundDate"
+                value={formData.foundDate}
                 onChange={(e) => {
                   console.log('Date input value:', e.target.value);
                   console.log('Date input type:', typeof e.target.value);
-                  handleInputChange('lostDate', e.target.value);
+                  handleInputChange('foundDate', e.target.value);
                 }}
-                className={`form-control ${errors.lostDate ? 'error' : ''}`}
+                className={`form-control ${errors.foundDate ? 'error' : ''}`}
                 max={new Date().toISOString().split('T')[0]}
               />
-              {errors.lostDate && <span className="error-message">{errors.lostDate}</span>}
+              {errors.foundDate && <span className="error-message">{errors.foundDate}</span>}
             </div>
 
             <ImageUpload
@@ -192,11 +192,35 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 className="form-control"
-                placeholder="Describe your item in detail (color, brand, distinctive features...)"
+                placeholder="Describe the item in detail (color, brand, distinctive features...)"
                 rows={4}
                 maxLength={500}
               />
               <small className="char-count">{formData.description.length}/500</small>
+            </div>
+          </div>
+
+          <div className="contact-info form-full-width">
+            <h4>Contact Information</h4>
+            <div className="contact-fields">
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={currentUser?.email || ''}
+                  className="form-control"
+                  disabled
+                />
+              </div>
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  value={currentUser?.email?.split('@')[0] || ''}
+                  className="form-control"
+                  disabled
+                />
+              </div>
             </div>
           </div>
 
@@ -214,7 +238,7 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
               className="btn-primary"
               disabled={loading}
             >
-              {loading ? 'Reporting...' : 'Report Lost Item'}
+              {loading ? 'Reporting...' : 'Report Found Item'}
             </button>
           </div>
         </form>
@@ -223,4 +247,4 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
   );
 };
 
-export default ReportLostForm;
+export default ReportFoundForm;

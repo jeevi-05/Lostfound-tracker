@@ -91,8 +91,7 @@ const Register = () => {
         </button>
         
         <div className="auth-links">
-          <p>Already have an account? <a href="/login">Sign in here</a> </p>
-          
+          <p>Already have an account? <a href="/login">Sign in here</a></p>
         </div>
       </form>
     </div>

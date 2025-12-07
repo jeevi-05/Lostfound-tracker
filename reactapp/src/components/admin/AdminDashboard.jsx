@@ -19,27 +19,6 @@ const AdminDashboard = () => {
     margin: '0 auto'
   };
   
-  const welcomeStyle = {
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '20px',
-    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
-    marginBottom: '2rem'
-  };
-  
-  const titleStyle = {
-    fontSize: '2.5rem',
-    color: '#2c3e50',
-    marginBottom: '1rem',
-    fontWeight: '700'
-  };
-  
-  const subtitleStyle = {
-    fontSize: '1.2rem',
-    color: '#7f8c8d',
-    marginBottom: '2rem'
-  };
   
   const statsStyle = {
     display: 'grid',

@@ -55,7 +55,7 @@ public class SecurityConfigSimple {
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/h2-console/**", "/api/categories/**", "/api/lost-items/**", "/api/upload/**", "/uploads/**", "/api/test/**").permitAll()
+                .requestMatchers("/api/auth/**", "/h2-console/**", "/api/categories/**", "/api/lost-items/**", "/api/found-items/**", "/api/upload/**", "/uploads/**", "/api/test/**").permitAll()
                 .anyRequest().authenticated()
             );
 

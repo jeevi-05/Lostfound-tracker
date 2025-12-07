@@ -63,7 +63,6 @@ const Login = () => {
         
         <div className="auth-links">
           <p>New to CampusTrack? <a href="/register">Create your account</a></p>
-          
         </div>
       </form>
     </div>
