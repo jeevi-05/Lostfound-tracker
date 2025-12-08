@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/common/Header';
 import Login from './components/auth/Login';
@@ -13,8 +13,7 @@ import './App.css';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
-  const [showReportLost, setShowReportLost] = useState(false);
-  const [showReportFound, setShowReportFound] = useState(false);
+  const navigate = useNavigate();
   
   const dashboardStyle = {
     minHeight: 'calc(100vh - 80px)',
@@ -58,13 +57,7 @@ const Dashboard = () => {
     transition: 'transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease'
   };
   
-  const getCardStyle = (isActive) => ({
-    ...cardStyle,
-    background: isActive ? '#e3f2fd' : 'white',
-    border: isActive ? '2px solid #2196f3' : '2px solid transparent',
-    transform: isActive ? 'translateY(-5px)' : 'none',
-    boxShadow: isActive ? '0 10px 30px rgba(33, 150, 243, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)'
-  });
+
   
   return (
     <div style={dashboardStyle}>
@@ -145,19 +138,15 @@ const Dashboard = () => {
           </div>
           
           <div 
-            style={getCardStyle(showReportLost)}
-            onClick={() => setShowReportLost(true)}
+            style={cardStyle}
+            onClick={() => navigate('/report-lost')}
             onMouseEnter={(e) => {
-              if (!showReportLost) {
-                e.target.style.transform = 'translateY(-5px)';
-                e.target.style.boxShadow = '0 10px 30px rgba(33, 150, 243, 0.3)';
-              }
+              e.target.style.transform = 'translateY(-5px)';
+              e.target.style.boxShadow = '0 10px 30px rgba(33, 150, 243, 0.3)';
             }}
             onMouseLeave={(e) => {
-              if (!showReportLost) {
-                e.target.style.transform = 'none';
-                e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-              }
+              e.target.style.transform = 'none';
+              e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
             }}
           >
             <h3 style={{ color: '#51cf66', marginBottom: '1rem' }}>📝 Report Lost</h3>
@@ -165,19 +154,15 @@ const Dashboard = () => {
           </div>
           
           <div 
-            style={getCardStyle(showReportFound)}
-            onClick={() => setShowReportFound(true)}
+            style={cardStyle}
+            onClick={() => navigate('/report-found')}
             onMouseEnter={(e) => {
-              if (!showReportFound) {
-                e.target.style.transform = 'translateY(-5px)';
-                e.target.style.boxShadow = '0 10px 30px rgba(33, 150, 243, 0.3)';
-              }
+              e.target.style.transform = 'translateY(-5px)';
+              e.target.style.boxShadow = '0 10px 30px rgba(33, 150, 243, 0.3)';
             }}
             onMouseLeave={(e) => {
-              if (!showReportFound) {
-                e.target.style.transform = 'none';
-                e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-              }
+              e.target.style.transform = 'none';
+              e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
             }}
           >
             <h3 style={{ color: '#ff6b6b', marginBottom: '1rem' }}>🎁 Report Found</h3>
@@ -185,19 +170,7 @@ const Dashboard = () => {
           </div>
         </div>
         
-        {showReportLost && (
-          <ReportLostForm
-            onClose={() => setShowReportLost(false)}
-            onSuccess={() => setShowReportLost(false)}
-          />
-        )}
-        
-        {showReportFound && (
-          <ReportFoundForm
-            onClose={() => setShowReportFound(false)}
-            onSuccess={() => setShowReportFound(false)}
-          />
-        )}
+
       </div>
     </div>
   );
@@ -225,6 +198,28 @@ const AppRoutes = () => {
               <>
                 <Header />
                 {currentUser?.role === 'ADMIN' ? <AdminDashboard /> : <Dashboard />}
+              </>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/report-lost" 
+          element={
+            <ProtectedRoute>
+              <>
+                <Header />
+                <ReportLostForm onClose={() => window.history.back()} onSuccess={() => window.location.href = '/dashboard'} />
+              </>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/report-found" 
+          element={
+            <ProtectedRoute>
+              <>
+                <Header />
+                <ReportFoundForm onClose={() => window.history.back()} onSuccess={() => window.location.href = '/dashboard'} />
               </>
             </ProtectedRoute>
           } 
