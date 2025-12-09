@@ -15,7 +15,7 @@ const Header = () => {
 
   const headerStyle = {
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    padding: '1rem 2rem',
+    padding: '1.5rem 2rem',
     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
     position: 'sticky',
     top: 0,
@@ -92,6 +92,17 @@ const Header = () => {
     transition: 'background 0.3s ease'
   };
 
+  const navLinkStyle = (isActive) => ({
+    color: 'white',
+    textDecoration: 'none',
+    fontWeight: '500',
+    padding: '0.6rem 1.5rem',
+    borderRadius: '25px',
+    transition: 'all 0.3s ease',
+    background: isActive ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)',
+    border: '2px solid rgba(255, 255, 255, 0.3)'
+  });
+
   const navStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -107,10 +118,17 @@ const Header = () => {
         
         {currentUser ? (
           <div style={navStyle}>
+            {currentUser.role === 'ADMIN' && (location.pathname.startsWith('/admin')) && (
+              <>
+                <a href="/admin/manage-posts" style={navLinkStyle(location.pathname === '/admin/manage-posts')}>Manage Posts</a>
+                <a href="/admin/user-management" style={navLinkStyle(location.pathname === '/admin/user-management')}>User Management</a>
+                <a href="/admin/analytics" style={navLinkStyle(location.pathname === '/admin/analytics')}>Analytics</a>
+              </>
+            )}
             {(location.pathname === '/report-lost' || location.pathname === '/report-found') && (
               <>
-                <a href="/report-lost" style={linkStyle}>Report Lost</a>
-                <a href="/report-found" style={linkStyle}>Report Found</a>
+                <a href="/report-lost" style={navLinkStyle(location.pathname === '/report-lost')}>Report Lost</a>
+                <a href="/report-found" style={navLinkStyle(location.pathname === '/report-found')}>Report Found</a>
               </>
             )}
             <div style={profileContainerStyle}>

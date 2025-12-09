@@ -6,38 +6,88 @@
 }
 
 .posts-header {
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+  position: relative;
 }
 
-.posts-header h2 {
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-content h2 {
   color: #2c3e50;
-  margin: 0 0 1rem 0;
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.post-count {
+  background: #4caf50;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .filters {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   flex-wrap: wrap;
+  align-items: flex-end;
+  position: absolute;
+  right: 0;
 }
 
-.filters select,
-.refresh-btn {
-  padding: 0.5rem 1rem;
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.filters select {
+  padding: 0.6rem 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   background: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filters select:hover {
+  border-color: #4caf50;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #4caf50;
 }
 
 .refresh-btn {
-  background: #4caf50;
-  color: white;
+  padding: 0.6rem 1.2rem;
+  background: white;
+  color: #666;
   cursor: pointer;
-  border: none;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  transition: all 0.3s;
 }
 
 .refresh-btn:hover {
-  background: #45a049;
+  background: #f5f5f5;
+  transform: rotate(180deg);
 }
 
 .loading {
@@ -47,110 +97,204 @@
   color: #666;
 }
 
+.no-posts {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 1.1rem;
+  grid-column: 1 / -1;
+}
+
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.2rem;
 }
 
 .post-card {
   border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background: #f9f9f9;
+  background: white;
   overflow: hidden;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 20px;
 }
 
-.post-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+.post-card:hover {
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4), 0 0 20px rgba(102, 126, 234, 0.3);
+  transform: translateY(-5px);
+  border-color: #667eea;
 }
 
-.post-info {
-  padding: 1.5rem;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.post-info h3 {
-  margin: 0 0 1rem 0;
-  color: #2c3e50;
+.type-badge {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.post-info p {
-  margin: 0.5rem 0;
-  color: #666;
-  font-size: 14px;
-}
-
-.description {
-  color: #555;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-.posted-time {
-  font-size: 12px;
-  color: #999;
-  margin-top: 10px;
-}
-
-.type {
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.type.lost {
+.type-badge.lost {
   background: #ffe0e0;
   color: #e74c3c;
 }
 
-.type.found {
+.type-badge.found {
   background: #e0f7e0;
   color: #27ae60;
 }
 
-.status {
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 12px;
+.status-badge {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.status.lost {
+.status-badge.lost {
   background: #fff3cd;
   color: #856404;
 }
 
-.status.found {
+.status-badge.found {
   background: #d1ecf1;
   color: #0c5460;
 }
 
-.status.claimed {
+.status-badge.claimed {
   background: #d4edda;
   color: #155724;
 }
 
-.status.available {
+.status-badge.available {
   background: #cce5ff;
   color: #004085;
+}
+
+.post-image {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.post-card:hover .post-image img {
+  transform: scale(1.05);
+}
+
+.post-info {
+  padding: 0.6rem 0.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-name {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.description {
+  color: #555;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.info-label {
+  font-size: 0.6rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 0.75rem;
+  color: #2c3e50;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.email {
+  font-size: 0.65rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.posted-time {
+  font-size: 0.6rem;
+  color: #999;
 }
 
 .post-actions {
   display: flex;
   gap: 0.5rem;
-  padding: 0 1.5rem 1.5rem;
+  padding: 0 0.8rem 0.6rem;
 }
 
 .toggle-btn, .delete-btn {
   flex: 1;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
+  font-weight: 600;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .toggle-btn {
@@ -160,6 +304,8 @@
 
 .toggle-btn:hover {
   background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
 .delete-btn {
@@ -169,4 +315,10 @@
 
 .delete-btn:hover {
   background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.toggle-btn:active, .delete-btn:active {
+  transform: translateY(0);
 }

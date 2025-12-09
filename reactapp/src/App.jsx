@@ -210,7 +210,7 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <>
                 <Header />
-                <ReportLostForm onClose={() => window.history.back()} onSuccess={() => window.location.href = '/dashboard'} />
+                <ReportLostForm onClose={() => window.location.href = '/dashboard'} onSuccess={() => window.location.href = '/dashboard'} />
               </>
             </ProtectedRoute>
           } 
@@ -221,7 +221,7 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <>
                 <Header />
-                <ReportFoundForm onClose={() => window.history.back()} onSuccess={() => window.location.href = '/dashboard'} />
+                <ReportFoundForm onClose={() => window.location.href = '/dashboard'} onSuccess={() => window.location.href = '/dashboard'} />
               </>
             </ProtectedRoute>
           } 

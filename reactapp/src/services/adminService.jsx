@@ -79,5 +79,34 @@ export const adminService = {
     const response = await fetch(`${API_BASE_URL}/categories`);
     if (!response.ok) throw new Error('Failed to fetch categories');
     return response.json();
+  },
+
+  getUsers: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch users');
+    return response.json();
+  },
+
+  toggleUserVerification: async (userId) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/toggle-verification`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to toggle verification');
+    return response.json();
+  },
+
+  deleteUser: async (userId) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete user');
   }
 };
+

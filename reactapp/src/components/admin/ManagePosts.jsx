@@ -89,27 +89,38 @@ const ManagePosts = () => {
   return (
     <div className="manage-posts">
       <div className="posts-header">
-        <h2>Manage Lost/Found Posts ({filteredPosts.length})</h2>
+        <div className="header-content">
+          <h2>📋 Manage Posts</h2>
+        </div>
         <div className="filters">
-          <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-            <option value="all">All Types</option>
-            <option value="lost">Lost Items</option>
-            <option value="found">Found Items</option>
-          </select>
-          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-            <option value="">All Categories</option>
-            {categories.map(cat => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
-          </select>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="">All Status</option>
-            <option value="LOST">Lost</option>
-            <option value="FOUND">Found</option>
-            <option value="CLAIMED">Claimed</option>
-            <option value="AVAILABLE">Available</option>
-          </select>
-          <button onClick={fetchData} className="refresh-btn">Refresh</button>
+          <div className="filter-group">
+            <label>Type</label>
+            <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
+              <option value="all">All Types</option>
+              <option value="lost">Lost Items</option>
+              <option value="found">Found Items</option>
+            </select>
+          </div>
+          <div className="filter-group">
+            <label>Category</label>
+            <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+              <option value="">All Categories</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="filter-group">
+            <label>Status</label>
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <option value="">All Status</option>
+              <option value="LOST">Lost</option>
+              <option value="FOUND">Found</option>
+              <option value="CLAIMED">Claimed</option>
+              <option value="AVAILABLE">Available</option>
+            </select>
+          </div>
+          <button onClick={fetchData} className="refresh-btn" title="Refresh data">🔄</button>
         </div>
       </div>
 
@@ -117,30 +128,57 @@ const ManagePosts = () => {
         <div className="loading">Loading posts...</div>
       ) : (
         <div className="posts-grid">
-          {filteredPosts.map(post => (
-            <div key={`${post.type}-${post.id}`} className="post-card">
-              {post.photoUrl && <img src={`http://localhost:8080${post.photoUrl}`} alt={post.itemName} />}
-              <div className="post-info">
-                <h3>{post.itemName}</h3>
-                <p className="description">{post.description}</p>
-                <p><strong>Type:</strong> <span className={`type ${post.type}`}>{post.type.toUpperCase()}</span></p>
-                <p><strong>Category:</strong> {post.categoryName}</p>
-                <p><strong>User:</strong> {post.userName} ({post.user})</p>
-                <p><strong>Location:</strong> {post.lostLocation || post.foundLocation}</p>
-                <p><strong>Date:</strong> {post.lostDate || post.foundDate}</p>
-                <p><strong>Status:</strong> <span className={`status ${post.status.toLowerCase()}`}>{post.status}</span></p>
-                <p className="posted-time">Posted: {new Date(post.createdAt).toLocaleString()}</p>
+          {filteredPosts.length === 0 ? (
+            <div className="no-posts">No posts found matching your filters</div>
+          ) : (
+            filteredPosts.map(post => (
+              <div key={`${post.type}-${post.id}`} className="post-card">
+                <div className="card-header">
+                  <span className={`type-badge ${post.type}`}>{post.type.toUpperCase()}</span>
+                  <span className={`status-badge ${post.status.toLowerCase()}`}>{post.status}</span>
+                </div>
+                {post.photoUrl && (
+                  <div className="post-image">
+                    <img src={`http://localhost:8080${post.photoUrl}`} alt={post.itemName} />
+                  </div>
+                )}
+                <div className="post-info">
+                  <h3 className="item-name">{post.itemName}</h3>
+                  <p className="description">{post.description}</p>
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <span className="info-label">📁 Category</span>
+                      <span className="info-value">{post.categoryName}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">👤 User</span>
+                      <span className="info-value">{post.userName}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">📍 Location</span>
+                      <span className="info-value">{post.lostLocation || post.foundLocation}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">📅 Date</span>
+                      <span className="info-value">{post.lostDate || post.foundDate}</span>
+                    </div>
+                  </div>
+                  <div className="post-meta">
+                    <span className="email">✉️ {post.user}</span>
+                    <span className="posted-time">🕒 {new Date(post.createdAt).toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="post-actions">
+                  <button onClick={() => toggleStatus(post.id, post.status, post.type)} className="toggle-btn" title="Change status">
+                    🔄 Change Status
+                  </button>
+                  <button onClick={() => handleDelete(post.id, post.type)} className="delete-btn" title="Delete post">
+                    🗑️ Delete
+                  </button>
+                </div>
               </div>
-              <div className="post-actions">
-                <button onClick={() => toggleStatus(post.id, post.status, post.type)} className="toggle-btn">
-                  Change Status
-                </button>
-                <button onClick={() => handleDelete(post.id, post.type)} className="delete-btn">
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
     </div>
