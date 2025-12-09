@@ -17,6 +17,12 @@
   max-height: 95vh;
   overflow-y: auto;
   animation: modalSlideIn 0.3s ease-out;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.report-lost-modal::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes modalSlideIn {
@@ -73,33 +79,6 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 2;
-}
-
-.close-button {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 2;
-}
-
-.close-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  transform: scale(1.05);
 }
 
 .report-form {

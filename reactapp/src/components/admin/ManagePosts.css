@@ -6,35 +6,68 @@
 }
 
 .posts-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 2rem;
 }
 
 .posts-header h2 {
   color: #2c3e50;
-  margin: 0;
+  margin: 0 0 1rem 0;
 }
 
-.posts-header select {
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.refresh-btn {
   padding: 0.5rem 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
+  background: white;
+}
+
+.refresh-btn {
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.refresh-btn:hover {
+  background: #45a049;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
 }
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 1.5rem;
 }
 
 .post-card {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 1.5rem;
   background: #f9f9f9;
+  overflow: hidden;
+}
+
+.post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.post-info {
+  padding: 1.5rem;
 }
 
 .post-info h3 {
@@ -45,26 +78,79 @@
 .post-info p {
   margin: 0.5rem 0;
   color: #666;
+  font-size: 14px;
 }
 
-.type.lost { color: #e74c3c; font-weight: bold; }
-.type.found { color: #27ae60; font-weight: bold; }
+.description {
+  color: #555;
+  font-style: italic;
+  margin-bottom: 10px;
+}
 
-.status.active { color: #f39c12; font-weight: bold; }
-.status.resolved { color: #27ae60; font-weight: bold; }
+.posted-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
+}
+
+.type {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.type.lost {
+  background: #ffe0e0;
+  color: #e74c3c;
+}
+
+.type.found {
+  background: #e0f7e0;
+  color: #27ae60;
+}
+
+.status {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.status.lost {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.found {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.claimed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.available {
+  background: #cce5ff;
+  color: #004085;
+}
 
 .post-actions {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
+  padding: 0 1.5rem 1.5rem;
 }
 
 .toggle-btn, .delete-btn {
+  flex: 1;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
+  transition: all 0.3s;
 }
 
 .toggle-btn {
@@ -72,7 +158,15 @@
   color: white;
 }
 
+.toggle-btn:hover {
+  background: #2980b9;
+}
+
 .delete-btn {
   background: #e74c3c;
   color: white;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
 }

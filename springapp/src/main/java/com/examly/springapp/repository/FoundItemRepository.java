@@ -20,4 +20,16 @@ public interface FoundItemRepository extends JpaRepository<FoundItem, Long> {
     List<FoundItem> searchByKeyword(@Param("keyword") String keyword);
     
     List<FoundItem> findAllByOrderByCreatedAtDesc();
+    
+    List<FoundItem> findByCategoryId(Long categoryId);
+    
+    List<FoundItem> findByStatus(String status);
+    
+    List<FoundItem> findByCategoryIdAndStatus(Long categoryId, String status);
+    
+    List<FoundItem> findByCategoryIdAndFinderEmail(Long categoryId, String finderEmail);
+    
+    List<FoundItem> findByStatusAndFinderEmail(String status, String finderEmail);
+    
+    List<FoundItem> findByCategoryIdAndStatusAndFinderEmail(Long categoryId, String status, String finderEmail);
 }

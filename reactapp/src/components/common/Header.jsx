@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const { currentUser, logout } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -91,6 +92,12 @@ const Header = () => {
     transition: 'background 0.3s ease'
   };
 
+  const navStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem'
+  };
+
   return (
     <header style={headerStyle}>
       <div style={containerStyle}>
@@ -99,7 +106,14 @@ const Header = () => {
         </a>
         
         {currentUser ? (
-          <div style={profileContainerStyle}>
+          <div style={navStyle}>
+            {(location.pathname === '/report-lost' || location.pathname === '/report-found') && (
+              <>
+                <a href="/report-lost" style={linkStyle}>Report Lost</a>
+                <a href="/report-found" style={linkStyle}>Report Found</a>
+              </>
+            )}
+            <div style={profileContainerStyle}>
             <button 
               style={profileButtonStyle}
               onClick={() => setShowDropdown(!showDropdown)}
@@ -117,6 +131,7 @@ const Header = () => {
               <button onClick={handleLogout} style={logoutButtonStyle}>
                 Logout
               </button>
+            </div>
             </div>
           </div>
         ) : (

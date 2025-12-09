@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import ManagePosts from './ManagePosts';
-import UserManagement from './UserManagement';
+import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const { currentUser } = useAuth();
-  const [activeTab, setActiveTab] = useState('overview');
+  const navigate = useNavigate();
 
   const dashboardStyle = {
     minHeight: 'calc(100vh - 80px)',
@@ -36,28 +35,6 @@ const AdminDashboard = () => {
     cursor: 'pointer',
     transition: 'transform 0.3s ease'
   };
-
-  const tabsStyle = {
-    display: 'flex',
-    background: 'white',
-    borderRadius: '15px',
-    padding: '0.5rem',
-    marginBottom: '2rem',
-    boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)'
-  };
-
-  const tabStyle = (isActive) => ({
-    flex: 1,
-    padding: '1rem 2rem',
-    border: 'none',
-    background: isActive ? '#667eea' : 'transparent',
-    color: isActive ? 'white' : '#666',
-    borderRadius: '10px',
-    cursor: 'pointer',
-    fontSize: '1rem',
-    fontWeight: '600',
-    transition: 'all 0.3s ease'
-  });
 
   const OverviewTab = () => (
     <div>
@@ -128,14 +105,14 @@ const AdminDashboard = () => {
       </div>
       
       <div style={statsStyle}>
-        <div style={cardStyle} onClick={() => setActiveTab('posts')}>
+        <div style={cardStyle} onClick={() => navigate('/admin/manage-posts')}>
           <h3 style={{ color: '#667eea', marginBottom: '1rem' }}>📝 Manage Posts</h3>
           <p>View and manage all lost/found reports</p>
           <div style={{ fontSize: '2rem', color: '#667eea', marginTop: '1rem' }}>25</div>
           <small style={{ color: '#7f8c8d' }}>Active Posts</small>
         </div>
         
-        <div style={cardStyle} onClick={() => setActiveTab('users')}>
+        <div style={cardStyle} onClick={() => navigate('/admin/user-management')}>
           <h3 style={{ color: '#51cf66', marginBottom: '1rem' }}>👥 User Management</h3>
           <p>Manage student accounts and verification</p>
           <div style={{ fontSize: '2rem', color: '#51cf66', marginTop: '1rem' }}>150</div>
@@ -155,15 +132,7 @@ const AdminDashboard = () => {
   return (
     <div style={dashboardStyle}>
       <div style={containerStyle}>
-        <div style={tabsStyle}>
-          <button style={tabStyle(activeTab === 'overview')} onClick={() => setActiveTab('overview')}>🏠 Overview</button>
-          <button style={tabStyle(activeTab === 'posts')} onClick={() => setActiveTab('posts')}>📝 Manage Posts</button>
-          <button style={tabStyle(activeTab === 'users')} onClick={() => setActiveTab('users')}>👥 User Management</button>
-        </div>
-
-        {activeTab === 'overview' && <OverviewTab />}
-        {activeTab === 'posts' && <ManagePosts />}
-        {activeTab === 'users' && <UserManagement />}
+        <OverviewTab />
       </div>
     </div>
   );

@@ -120,7 +120,6 @@ const ReportFoundForm = ({ onClose, onSuccess }) => {
       <div className="report-found-modal" data-extension-ignore="true">
         <div className="modal-header">
           <h2>Report Found Asset</h2>
-          <button className="close-button" onClick={onClose}>✕</button>
         </div>
 
         <form onSubmit={handleSubmit} className="report-form" data-extension-ignore="true">

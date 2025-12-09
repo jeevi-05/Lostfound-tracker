@@ -120,7 +120,6 @@ const ReportLostForm = ({ onClose, onSuccess }) => {
       <div className="report-lost-modal">
         <div className="modal-header">
           <h2>Report Missing Asset</h2>
-          <button className="close-button" onClick={onClose}>✕</button>
         </div>
 
         <form onSubmit={handleSubmit} className="report-form">

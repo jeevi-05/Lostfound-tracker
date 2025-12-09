@@ -26,4 +26,12 @@ public interface LostItemRepository extends JpaRepository<LostItem, Long> {
     
     @Query("SELECT l FROM LostItem l WHERE l.lostLocation LIKE %:location%")
     List<LostItem> findByLocation(@Param("location") String location);
+    
+    List<LostItem> findByCategoryIdAndStatus(Long categoryId, LostItem.ItemStatus status);
+    
+    List<LostItem> findByCategoryIdAndReporterEmail(Long categoryId, String reporterEmail);
+    
+    List<LostItem> findByStatusAndReporterEmail(LostItem.ItemStatus status, String reporterEmail);
+    
+    List<LostItem> findByCategoryIdAndStatusAndReporterEmail(Long categoryId, LostItem.ItemStatus status, String reporterEmail);
 }

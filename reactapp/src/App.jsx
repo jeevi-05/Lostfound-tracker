@@ -7,6 +7,8 @@ import Register from './components/auth/Register';
 import VerifyAccount from './components/auth/VerifyAccount';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminDashboard from './components/admin/AdminDashboard';
+import ManagePosts from './components/admin/ManagePosts';
+import UserManagement from './components/admin/UserManagement';
 import ReportLostForm from './components/lostitem/ReportLostForm';
 import ReportFoundForm from './components/founditem/ReportFoundForm';
 import './App.css';
@@ -149,7 +151,7 @@ const Dashboard = () => {
               e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
             }}
           >
-            <h3 style={{ color: '#51cf66', marginBottom: '1rem' }}>📝 Report Lost</h3>
+            <h3 style={{ color: '#51cf66', marginBottom: '1rem' }}>📢 Report Lost</h3>
             <p>Report items you've lost on campus</p>
           </div>
           
@@ -165,7 +167,7 @@ const Dashboard = () => {
               e.target.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
             }}
           >
-            <h3 style={{ color: '#ff6b6b', marginBottom: '1rem' }}>🎁 Report Found</h3>
+            <h3 style={{ color: '#ff6b6b', marginBottom: '1rem' }}>🔔 Report Found</h3>
             <p>Help others by reporting items you've found</p>
           </div>
         </div>
@@ -220,6 +222,28 @@ const AppRoutes = () => {
               <>
                 <Header />
                 <ReportFoundForm onClose={() => window.history.back()} onSuccess={() => window.location.href = '/dashboard'} />
+              </>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/manage-posts" 
+          element={
+            <ProtectedRoute>
+              <>
+                <Header />
+                <ManagePosts />
+              </>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/user-management" 
+          element={
+            <ProtectedRoute>
+              <>
+                <Header />
+                <UserManagement />
               </>
             </ProtectedRoute>
           } 
